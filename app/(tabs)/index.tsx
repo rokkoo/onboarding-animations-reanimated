@@ -1,19 +1,20 @@
 import { useState } from 'react';
 import { Pressable, Text, View, ViewStyle } from 'react-native';
 import { CircleCheckBig } from 'lucide-react-native';
-
 import Animted, {
   FadeInDown,
   FadeInLeft,
   FadeOutLeft,
   FadeOutUp,
   LinearTransition,
+  ZoomIn,
 } from 'react-native-reanimated';
 import Animated from 'react-native-reanimated';
 
 const AnimatedTouchable = Animated.createAnimatedComponent(Pressable);
 
 const _buttonHeight = 50;
+const _spacing = 16;
 
 interface AnimatedButtonProps extends React.PropsWithChildren {
   style: ViewStyle;
@@ -78,7 +79,7 @@ export default function HomeScreen() {
     >
       <Text>{Data[seletedStep].title}</Text>
       <View>
-        <View style={{ flexDirection: 'row', gap: 16 }}>
+        <View style={{ flexDirection: 'row', gap: _spacing }}>
           {isBackButtonVisible && (
             <AnimatedButton
               style={{ backgroundColor: '#ddd' }}
@@ -116,11 +117,18 @@ export default function HomeScreen() {
                 exiting={FadeOutUp.springify().stiffness(200).damping(18)}
                 style={{
                   flexDirection: 'row',
-                  gap: 8,
+                  gap: _spacing / 2,
                   alignItems: 'center',
                 }}
               >
-                <CircleCheckBig color={'white'} />
+                <Animated.View
+                  entering={ZoomIn.springify()
+                    .stiffness(200)
+                    .damping(18)
+                    .delay(100)}
+                >
+                  <CircleCheckBig color={'white'} size={18} />
+                </Animated.View>
                 <Text
                   style={{
                     color: 'white',
