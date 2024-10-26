@@ -1,15 +1,12 @@
 import { useState } from 'react';
-import {
-  Pressable,
-  Text,
-  TouchableOpacity,
-  View,
-  ViewStyle,
-} from 'react-native';
+import { Pressable, Text, View, ViewStyle } from 'react-native';
+import { CircleCheckBig } from 'lucide-react-native';
 
 import Animted, {
+  FadeInDown,
   FadeInLeft,
   FadeOutLeft,
+  FadeOutUp,
   LinearTransition,
 } from 'react-native-reanimated';
 import Animated from 'react-native-reanimated';
@@ -68,6 +65,7 @@ export default function HomeScreen() {
   const [seletedStep, setSeletedStep] = useState(0);
 
   const isBackButtonVisible = seletedStep > 0;
+  const isLastStep = seletedStep === Data.length - 1;
 
   return (
     <Animted.View
@@ -89,6 +87,11 @@ export default function HomeScreen() {
               }}
             >
               <Animated.Text
+                style={{
+                  color: 'black',
+                  fontWeight: 'bold',
+                  fontSize: 16,
+                }}
                 layout={LinearTransition.springify()
                   .stiffness(2000)
                   .damping(18)}
@@ -107,11 +110,41 @@ export default function HomeScreen() {
               setSeletedStep(seletedStep + 1);
             }}
           >
-            <Animated.Text
-              layout={LinearTransition.springify().stiffness(200).damping(18)}
-            >
-              Continuar
-            </Animated.Text>
+            {isLastStep ? (
+              <Animated.View
+                entering={FadeInDown.springify().stiffness(200).damping(18)}
+                exiting={FadeOutUp.springify().stiffness(200).damping(18)}
+                style={{
+                  flexDirection: 'row',
+                  gap: 8,
+                  alignItems: 'center',
+                }}
+              >
+                <CircleCheckBig color={'white'} />
+                <Text
+                  style={{
+                    color: 'white',
+                    fontWeight: 'bold',
+                    fontSize: 16,
+                  }}
+                >
+                  Finalizar
+                </Text>
+              </Animated.View>
+            ) : (
+              <Animated.Text
+                entering={FadeInDown.springify().stiffness(200).damping(18)}
+                exiting={FadeOutUp.springify().stiffness(200).damping(18)}
+                style={{
+                  color: 'white',
+                  fontWeight: 'bold',
+                  fontSize: 16,
+                }}
+                layout={LinearTransition.springify().stiffness(200).damping(18)}
+              >
+                Continuar
+              </Animated.Text>
+            )}
           </AnimatedButton>
         </View>
       </View>
