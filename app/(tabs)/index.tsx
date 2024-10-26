@@ -1,5 +1,11 @@
 import { useState } from 'react';
-import { Text, TouchableOpacity, View, ViewStyle } from 'react-native';
+import {
+  Pressable,
+  Text,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from 'react-native';
 
 import Animted, {
   FadeInLeft,
@@ -8,7 +14,7 @@ import Animted, {
 } from 'react-native-reanimated';
 import Animated from 'react-native-reanimated';
 
-const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
+const AnimatedTouchable = Animated.createAnimatedComponent(Pressable);
 
 const _buttonHeight = 50;
 
@@ -65,7 +71,12 @@ export default function HomeScreen() {
 
   return (
     <Animted.View
-      style={{ flex: 1, justifyContent: 'center', paddingBottom: 30 }}
+      style={{
+        flex: 1,
+        justifyContent: 'center',
+        paddingBottom: 30,
+        marginHorizontal: 16,
+      }}
     >
       <Text>{Data[seletedStep].title}</Text>
       <View>
